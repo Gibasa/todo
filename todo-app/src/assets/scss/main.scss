@@ -12,4 +12,8 @@ main{
     justify-content: center;
     background-color: hsl(236, 33%, 92%);
     height: 100vh;
+    position: relative;
+    background-image: url(../img/bg-desktop-light.jpg);
+    background-repeat: no-repeat;
+    background-size: contain;
 }
