@@ -2,7 +2,7 @@
   <div class="attribution">
     Challenge by
     <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. Coded
-    by <a href="#">Gilbero Sá</a>.
+    by <a href="#">Gilberto Sá</a>.
   </div>
 </template>
 
