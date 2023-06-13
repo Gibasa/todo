@@ -16,8 +16,8 @@
       />
     </div>
     <div class="card inputTodo">
-      <input type="checkbox" name="newTodo" id="newTodo" />
-      <input type="text" placeholder="Create a new todo..." />
+      <input type="checkbox" @click="addTodo()" name="newTodo" id="newTodo" />
+      <input type="text" v-model="newTodo.todo" placeholder="Create a new todo..." />
     </div>
     <div class="card">
       <ul>
@@ -27,8 +27,8 @@
           @mouseover="hoverIndex = index"
           @mouseleave="hoverIndex = -1"
         >
-          <input type="checkbox" name="todoItem" :id="'item-' + item.id" checked />
-          <label :for="'item-' + item.id">
+          <input type="checkbox" name="todoItem" :id="'item-' + item.index"/>
+          <label :for="'item-' + item.index">
             {{ item.todo }}
           </label>
 
@@ -41,7 +41,7 @@
             <h3>Active</h3>
             <h3>Completed</h3>
           </div>
-          <h3>Clear Completed</h3>
+          <h3 @click="clear()">Clear Completed</h3>
         </li>
       </ul>
     </div>
@@ -52,17 +52,32 @@ export default {
   name: 'listComponent',
   data() {
     return {
-      list: [
-        { id: 1, todo: 'Estudar', status: 'waiting' },
-        { id: 2, todo: 'Trabalhar', status: 'done' },
-        { id: 3, todo: 'Cortar Grama', status: 'waiting' },
-        { id: 4, todo: 'Exercitar', status: 'done' },
-        { id: 5, todo: 'Lavar a roupa', status: 'waiting' },
-        { id: 6, todo: 'Cozinhar', status: 'done' }
-      ],
+      list: [],
+      newTodo: {},
       hoverIndex: -1,
       mode: 'light'
     }
+  },
+  methods:{
+    addTodo: function(){
+        if(this.newTodo.todo){
+            this.newTodo.status = false;
+            this.list.push(this.newTodo);
+            this.newTodo = {};
+            localStorage.setItem("Todo", JSON.stringify(this.list))
+        } else {
+            alert("Please insert a task")
+        }
+    },
+    clear: function(){
+        this.list = []
+    }
+  },
+  created(){
+    this.list = localStorage.getItem("Todo") ? JSON.parse(localStorage.getItem("Todo")) : this.list;
+  },
+  updated(){
+    localStorage.setItem("Todo", JSON.stringify(this.list))
   }
 }
 </script>
@@ -102,8 +117,7 @@ export default {
       cursor: pointer;
       margin: 10px 20px 10px 20px;
       &:checked {
-        background-color: hsl(192, 100%, 67%);
-        background-image: url(../assets/img/icon-check.svg);
+        background-color: none;
         background-size: cover;
         background-position: center;
       }
@@ -113,6 +127,7 @@ export default {
       border: none;
       outline: none;
       height: 50px;
+      border-radius: 10px;
       font-size: larger;
       ::placeholder{
         color: hsl(236, 9%, 61%);
