@@ -26,16 +26,22 @@
           :key="item.id"
           @mouseover="hoverIndex = index"
           @mouseleave="hoverIndex = -1"
+          @click="item.done = !item.done"
         >
-          <input type="checkbox" name="todoItem" :id="'item-' + item.index"/>
-          <label :for="'item-' + item.index">
+          <input
+            type="checkbox"
+            v-model="item.done"
+            name="todoItem"
+            :id="'item-' + item.index"
+          />
+          <label :class="{ done: item.done }" :for="'item-' + item.index">
             {{ item.todo }}
           </label>
 
           <img src="../assets/img/icon-cross.svg" alt="cross" v-show="hoverIndex === index" />
         </li>
         <li class="bottom">
-          <h3 class="itemsLeft">5 items left</h3>
+          <h3 class="itemsLeft">{{list.length}} items left</h3>
           <div class="selection">
             <h3>All</h3>
             <h3>Active</h3>
@@ -58,26 +64,37 @@ export default {
       mode: 'light'
     }
   },
-  methods:{
-    addTodo: function(){
-        if(this.newTodo.todo){
-            this.newTodo.status = false;
-            this.list.push(this.newTodo);
-            this.newTodo = {};
-            localStorage.setItem("Todo", JSON.stringify(this.list))
-        } else {
-            alert("Please insert a task")
-        }
+  methods: {
+    addTodo: function () {
+      if (this.newTodo.todo) {
+        this.newTodo.done = false
+        this.list.push(this.newTodo)
+        this.newTodo = {}
+        localStorage.setItem('Todo', JSON.stringify(this.list))
+      } else {
+        alert('Please insert a task')
+      }
     },
-    clear: function(){
-        this.list = []
+    clear: function () {
+      var count = 0
+      while (count <= this.list.length) {
+        this.list.forEach((element) => {
+          if (element.done) {
+            var i = this.list.indexOf(element)
+            this.list.splice(i, 1)
+            count += 1
+          } else {
+            count += 1
+          }
+        })
+      }
     }
   },
-  created(){
-    this.list = localStorage.getItem("Todo") ? JSON.parse(localStorage.getItem("Todo")) : this.list;
+  created() {
+    this.list = localStorage.getItem('Todo') ? JSON.parse(localStorage.getItem('Todo')) : this.list
   },
-  updated(){
-    localStorage.setItem("Todo", JSON.stringify(this.list))
+  updated() {
+    localStorage.setItem('Todo', JSON.stringify(this.list))
   }
 }
 </script>
@@ -129,7 +146,7 @@ export default {
       height: 50px;
       border-radius: 10px;
       font-size: larger;
-      ::placeholder{
+      ::placeholder {
         color: hsl(236, 9%, 61%);
       }
     }
@@ -152,6 +169,11 @@ export default {
       padding: 10px 0 10px 0;
       border-bottom: 1px solid hsl(233, 11%, 84%);
       color: hsl(235, 19%, 35%);
+      cursor: pointer;
+      .done {
+        text-decoration: line-through;
+        color: hsl(236, 9%, 61%);
+      }
       input[type='checkbox'] {
         color: hsl(235, 19%, 35%);
         appearance: none;
@@ -185,12 +207,11 @@ export default {
       color: hsl(236, 9%, 61%);
     }
     h3:not(.itemsLeft) {
-        cursor: pointer;
-      }
+      cursor: pointer;
+    }
     .selection {
       display: flex;
       gap: 10px;
-      
     }
   }
 }
