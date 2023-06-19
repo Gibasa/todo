@@ -22,30 +22,35 @@
     <div class="card">
       <ul>
         <li
-          v-for="(item, index) in list"
+          v-for="(item, index) in filteredList"
           :key="item.id"
           @mouseover="hoverIndex = index"
           @mouseleave="hoverIndex = -1"
           @click="item.done = !item.done"
+          class="listItem"
         >
-          <input
-            type="checkbox"
-            v-model="item.done"
-            name="todoItem"
-            :id="'item-' + item.index"
-          />
+          <input type="checkbox" v-model="item.done" name="todoItem" :id="'item-' + item.index" />
           <label :class="{ done: item.done }" :for="'item-' + item.index">
             {{ item.todo }}
           </label>
 
-          <img src="../assets/img/icon-cross.svg" alt="cross" v-show="hoverIndex === index" />
+          <img
+            src="../assets/img/icon-cross.svg"
+            alt="cross"
+            @click.stop="removeTodo(index)"
+            v-show="hoverIndex === index"
+          />
         </li>
         <li class="bottom">
-          <h3 class="itemsLeft">{{list.length}} items left</h3>
+          <h3 class="itemsLeft">{{ list.length }} items left</h3>
           <div class="selection">
-            <h3>All</h3>
-            <h3>Active</h3>
-            <h3>Completed</h3>
+            <h3 :class="{ active: filter === 'All' }" @click="updateFilter('All')">All</h3>
+            <h3 :class="{ active: filter === 'Active' }" @click="updateFilter('Active')">
+              Active
+            </h3>
+            <h3 :class="{ active: filter === 'Completed' }" @click="updateFilter('Completed')">
+              Completed
+            </h3>
           </div>
           <h3 @click="clear()">Clear Completed</h3>
         </li>
@@ -61,7 +66,9 @@ export default {
       list: [],
       newTodo: {},
       hoverIndex: -1,
-      mode: 'light'
+      mode: 'light',
+      filter: 'All',
+      filteredItems: []
     }
   },
   methods: {
@@ -88,10 +95,35 @@ export default {
           }
         })
       }
+    },
+    removeTodo: function (index) {
+      this.list.splice(index, 1)
+    },
+    updateFilter: function (filter) {
+      this.filter = filter;
+      switch (filter) {
+        case 'All':
+          this.filteredItems = this.list
+          break
+        case 'Active':
+          this.filteredItems = this.list.filter((item) => !item.done)
+          break
+        case 'Completed':
+          this.filteredItems = this.list.filter((item) => item.done)
+          break
+        default:
+          this.filteredItems = this.list
+      }
+    }
+  },
+  computed: {
+    filteredList: function () {
+      return this.filteredItems || this.list
     }
   },
   created() {
     this.list = localStorage.getItem('Todo') ? JSON.parse(localStorage.getItem('Todo')) : this.list
+    this.updateFilter(this.filter)
   },
   updated() {
     localStorage.setItem('Todo', JSON.stringify(this.list))
@@ -161,7 +193,7 @@ export default {
       width: 100%;
       padding: 0;
     }
-    li {
+    .listItem {
       display: flex;
       align-items: center;
       list-style-type: none;
@@ -198,9 +230,12 @@ export default {
       }
     }
   }
+
   .bottom {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    list-style-type: none;
     margin: 0 10px;
     h3 {
       font-size: small;
@@ -212,6 +247,9 @@ export default {
     .selection {
       display: flex;
       gap: 10px;
+    }
+    .active {
+      color: hsl(220, 98%, 61%);
     }
   }
 }
