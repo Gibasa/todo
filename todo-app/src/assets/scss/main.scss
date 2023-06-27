@@ -9,11 +9,17 @@
 main{
     display: flex;
     align-items: center;
-    justify-content: center;
-    background-color: hsl(236, 33%, 92%);
+    justify-content: center;    
     height: 100vh;
-    position: relative;
-    background-image: url(../img/bg-desktop-light.jpg);
+    position: relative;    
     background-repeat: no-repeat;
     background-size: contain;
+    &.light {
+        background-color: hsl(236, 33%, 92%);
+        background-image: url(../img/bg-desktop-light.jpg);
+    }
+    &.dark {
+        background-color: hsl(235, 21%, 11%);
+        background-image: url(../img/bg-desktop-dark.jpg);
+    }
 }
