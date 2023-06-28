@@ -1,25 +1,38 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap');
 
-*{
-    font-family: 'Josefin Sans', sans-serif;
-    margin: 0;
-    box-sizing: border-box;
+* {
+  font-family: 'Josefin Sans', sans-serif;
+  margin: 0;
+  box-sizing: border-box;
 }
 
-main{
-    display: flex;
-    align-items: center;
-    justify-content: center;    
-    height: 100vh;
-    position: relative;    
-    background-repeat: no-repeat;
-    background-size: contain;
-    &.light {
-        background-color: hsl(236, 33%, 92%);
-        background-image: url(../img/bg-desktop-light.jpg);
+main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  position: relative;
+  background-repeat: no-repeat;
+  background-size: contain;
+  z-index: 2;
+  &.light {
+    background-color: hsl(236, 33%, 92%);
+    background-image: url(../img/bg-desktop-light.jpg);
+  }
+  &.dark {
+    background-color: hsl(235, 21%, 11%);
+    background-image: url(../img/bg-desktop-dark.jpg);
+  }
+}
+
+@media (max-width: 1007px) {
+  main{
+    &.light{
+      background-image: url(../img/bg-mobile-light.jpg);
     }
-    &.dark {
-        background-color: hsl(235, 21%, 11%);
-        background-image: url(../img/bg-desktop-dark.jpg);
+    &.dark{
+      background-image: url(../img/bg-mobile-dark.jpg);
     }
+  }
+
 }

@@ -43,18 +43,31 @@
           </li>
         </template>
       </draggable>
-      <li class="bottom">
-        <h3 class="itemsLeft">{{ list.length }} items left</h3>
-        <div class="selection">
-          <h3 :class="{ active: filter === 'All' }" @click="updateFilter('All')">All</h3>
-          <h3 :class="{ active: filter === 'Active' }" @click="updateFilter('Active')">Active</h3>
-          <h3 :class="{ active: filter === 'Completed' }" @click="updateFilter('Completed')">
-            Completed
-          </h3>
+        <li class="bottom">
+          <h3 class="itemsLeft">{{ list.length }} items left</h3>
+          <div class="selection notMob">
+            <h3 :class="{ active: filter === 'All' }" @click="updateFilter('All')">All</h3>
+            <h3 :class="{ active: filter === 'Active' }" @click="updateFilter('Active')">Active</h3>
+            <h3 :class="{ active: filter === 'Completed' }" @click="updateFilter('Completed')">
+              Completed
+            </h3>
+          </div>
+          <h3 @click="clear()">Clear Completed</h3>
+        </li>
+        <div class="spacer"></div>
+        <div class="selectionMobile">
+          <div class="selection">
+            <h3 :class="{ active: filter === 'All' }" @click="updateFilter('All')">All</h3>
+            <h3 :class="{ active: filter === 'Active' }" @click="updateFilter('Active')">Active</h3>
+            <h3 :class="{ active: filter === 'Completed' }" @click="updateFilter('Completed')">
+              Completed
+            </h3>
+          </div>
         </div>
-        <h3 @click="clear()">Clear Completed</h3>
-      </li>
-    </div>
+      </div>
+      <div class="drag">
+        <h2>Drag and drop to reorder list</h2>
+      </div>
   </div>
 </template>
 <script>
@@ -156,6 +169,7 @@ export default {
   width: 35%;
   top: 35%;
   left: 50%;
+  z-index: 2;
   transform: translate(-50%, -20%);
   .todoDarkLight {
     display: flex;
@@ -272,6 +286,58 @@ export default {
     }
     .active {
       color: hsl(220, 98%, 61%);
+    }
+  }.selectionMobile {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    margin: 0 10px -10px;
+    height: 80px;
+    h3 {
+      font-size: medium;
+      color: hsl(236, 9%, 61%);
+    }
+    .active {
+      color: hsl(220, 98%, 61%);
+    }
+    .selection {
+      display: flex;
+      gap: 30px;
+    }
+  }
+
+  .spacer {
+    height: 20px;
+    background-color: hsl(235, 21%, 11%);
+    display: none;
+  }
+  .drag{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    font-size: 0.5em;
+    color: hsl(234, 11%, 52%);
+  }
+}
+
+@media (max-width: 1007px) {
+  .list {
+    width: 90%; // Ajuste a largura para se adaptar a telas menores
+    top: 50%; // Ajuste a posição vertical
+    transform: translate(-50%, -50%);
+    .bottom{
+      padding: 0 10px;
+    }
+    .selectionMobile{
+      display: flex;
+    }
+    .spacer{
+      display: block;
+    }
+    .notMob h3{
+      display: none;
     }
   }
 }

@@ -17,6 +17,7 @@ export default{
   font-size: 11px;
   text-align: center;
   position: fixed;
+  z-index: 1;
   bottom: 0;
   padding-bottom: 10px;
   color: hsl(235, 19%, 35%);
