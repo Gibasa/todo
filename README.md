@@ -1,35 +1,44 @@
-# todo-app
+# Frontend Mentor - Todo app solution
 
-This template should help get you started developing with Vue 3 in Vite.
+This is a solution to the [Todo app challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/todo-app-Su1_KokOW). Frontend Mentor challenges help you improve your coding skills by building realistic projects. 
 
-## Recommended IDE Setup
+### The challenge
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+Users should be able to:
 
-## Customize configuration
+- View the optimal layout for the app depending on their device's screen size
+- See hover states for all interactive elements on the page
+- Add new todos to the list
+- Mark todos as complete
+- Delete todos from the list
+- Filter by all/active/complete todos
+- Clear all completed todos
+- Toggle light and dark mode
+- **Bonus**: Drag and drop to reorder items on the list
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+### Screenshot
 
-## Project Setup
+![](./src/assets/img/screenshot.png)
 
-```sh
-npm install
-```
+### Links
 
-### Compile and Hot-Reload for Development
+- Live Site URL (https://gibasa.github.io/todo/)
 
-```sh
-npm run dev
-```
+### Built with
 
-### Compile and Minify for Production
+- Semantic HTML5 markup
+- CSS custom properties
+- Flexbox
+- CSS Grid
+- Mobile-first workflow
+- [Vue.js](https://vuejs.org) - JS library
 
-```sh
-npm run build
-```
 
-### Lint with [ESLint](https://eslint.org/)
+### What I learned
 
-```sh
-npm run lint
-```
+I practiced more the use of Vue.js. I learned how to create elements with drag and drop functionality, and I learned how to add dark/light functionality to the website. This was my first project in Vue.js using Vite with deployment on GitHub Pages. Additionally, I continued to practice my HTML and CSS skills. It was very fulfilling to complete this challenge.
+
+## Author
+
+- Frontend Mentor - [@Gibasa](https://www.frontendmentor.io/profile/Gibasa)
+
